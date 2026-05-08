@@ -1,7 +1,14 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-const WS_URL = (API_URL.replace('http', 'ws'));
+
+const getWsUrl = (url) => {
+  if (!url) return '';
+  // Convert http:// to ws:// and https:// to wss://
+  return url.replace(/^http/, 'ws');
+};
+
+const WS_URL = getWsUrl(API_URL);
 
 export function useWebSocket() {
   const [connected, setConnected] = useState(false);
